@@ -1,0 +1,16 @@
+# this is a egress policy that allows application access to www.google.com
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: google
+spec:
+  hosts:
+    - "www.google.com"
+  location: MESH_EXTERNAL
+  # This can be enabled to restrict this resource to the current namespace
+  # exportTo:
+  # - "."
+  ports:
+    - name: https
+      number: 443
+      protocol: HTTPS

@@ -1,0 +1,13 @@
+# This enforces a jwt authentication with the jwks provided by an auth app or upstream jwks store
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-demo
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  jwtRules:
+  - issuer: authmanager
+    jwksUri: http://authmanager.auth.svc.cluster.local:3000/demo/jwks.json

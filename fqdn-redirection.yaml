@@ -1,0 +1,27 @@
+# this defaults to example-app.default.svc.cluster.local
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app
+  namespace: default
+spec:
+  ports:
+  - name: example-app
+    port: 3000
+    protocol: TCP
+---
+# request made to example-app.default.svc.cluster.local will be redirected to example-app.another-namespace.svc.cluster.local
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: example-app
+  namespace: default
+spec:
+  hosts:
+  - example-app.default.svc.cluster.local
+  http:
+  - route:
+    - destination:
+        host: example-app.another-namespace.svc.cluster.local
+        port:
+          number: 3000
